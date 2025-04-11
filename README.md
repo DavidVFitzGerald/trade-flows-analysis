@@ -20,6 +20,7 @@ This project was setup and run from a GCP virtual machine. In case you would lik
 5. Connect to the VM
 
 
+
 6. Install miniconda
 
 ```
@@ -37,6 +38,53 @@ Then execute the following command to check that the base environment is activat
 source .bashrc
 ```
 
+Clone the repository
+```
+git clone https://github.com/DavidVFitzGerald/trade-flows-analysis.git
+```
+
 7. Terraform
+Create bin directory in top-level directory.
+```
+mkdir bin
+```
+
+In the bin directory, download the Terraform binary for Linux
+```
+wget https://releases.hashicorp.com/terraform/1.11.4/terraform_1.11.4_linux_amd64.zip
+```
+
+Install unzip to unzip the terraform binary file.
+```
+sudo apt install unzip
+```
+```
+unzip terraform_1.11.4_linux_amd64.zip
+```
+```
+rm terraform_1.11.4_linux_amd64.zip
+```
+
+Add bin folder to the PATH variable so that terraform is visible from any directory. Edit the .bashrc file to add the following line at the end:
+```
+export PATH="${HOME}/bin:${PATH}"
+```
+
+Google Cloud Authentication
+
+Create a directory named ".gc" and save in there the service account credentials json file
+
+In case you are not running the code on a VM created on GCP, you will need to install the Google Cloud SDK (for the purpose of using the gcloud CLI).
+
+Once gcloud CLI is available, run the following command
+
+Configure google cloud CLI
+```
+export GOOGLE_APPLICATION_CREDENTIALS=~/.gc/[KEY_FILENAME].json
+```
+```
+gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
+```
+
 
 8. Pyspark
