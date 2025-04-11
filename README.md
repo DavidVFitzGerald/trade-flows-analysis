@@ -87,4 +87,12 @@ gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
 ```
 
 
+Run terraform:
+Edit location and region in variables.tf
+
+terraform init
+terraform plan
+terraform apply
+
+
 8. Pyspark
