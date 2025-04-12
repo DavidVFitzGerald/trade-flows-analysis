@@ -18,7 +18,7 @@ resource "google_storage_bucket" "trade-flows-bucket" {
   location      = var.location
   force_destroy = true
 
-  storage_class = var.gcs_storage_class
+  storage_class               = var.gcs_storage_class
   uniform_bucket_level_access = true
 
   lifecycle_rule {
@@ -37,8 +37,8 @@ resource "google_bigquery_dataset" "trade-flows-dataset" {
 }
 
 resource "google_dataproc_cluster" "trade-flows-cluster" {
-  name   = var.gcs_cluster_name
-  region = var.region
+  name    = var.gcs_cluster_name
+  region  = var.region
   project = var.project
 
   cluster_config {
@@ -59,7 +59,7 @@ resource "google_dataproc_cluster" "trade-flows-cluster" {
       }
     }
     worker_config {
-     num_instances = 0
+      num_instances = 0
     }
 
   }
