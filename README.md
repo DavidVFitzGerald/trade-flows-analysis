@@ -9,7 +9,8 @@ This repository contains a data pipeline for ingesting and analysing trade data 
 ## Setup walkthrough
 In case you would like to run the data pipeline, follow the steps described below.
 1. On GCP, create a new project
-2. Create a service account and assign the "Storage Admin", "BigQuery Admin" and "Compute Admin" roles to it
+2. Create a service account and assign the "Storage Admin", "BigQuery Admin", "Compute Admin", and "Dataproc Administrator" roles to it
+To keep things simple, only one service account is created for the purpose of this project.
 3. Create a JSON key for that account
 
 This project was setup and run from a GCP virtual machine. In case you would like to also setup a virtual machine and use it to execute the pipeline, follow the instructions below:
@@ -88,11 +89,23 @@ gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
 
 
 Run terraform:
-Edit location and region in variables.tf
+In the terraform/variables.tf file, edit the variables "credentials", "project", "region" and "location" to adapt them to your Google Cloud setup.
 
+To make it possible to launch a cluster with terraform, the service account used for authenticating to google cloud will need to be granted permission to act upon the service account of compute engine. Go to the service accounts page in google cloud platform, click on the account of the compute engine, go to the Permissions tab, select the compute engine service account and click on the Grant access button. Under Add principals, type the name of the service account created for the project (i.e. the one used for authenticating the VM to google cloud). As role, add "Service Account User". Click save.
+
+Run the following commands to set the infrastructure up:
+```
 terraform init
+```
+```
 terraform plan
+```
 terraform apply
-
+```
 
 8. Pyspark
+Enable Dataproc API
+
+
+
+

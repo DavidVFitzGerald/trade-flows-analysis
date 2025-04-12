@@ -1,6 +1,6 @@
 variable "credentials" {
   description = "Credentials"
-  default     = "home/david/.gc/trade-flows-analysis.json"
+  default     = "/home/david/.gc/trade-flows-analysis.json"
 }
 
 variable "project" {
@@ -31,4 +31,9 @@ variable "gcs_bucket_name" {
 variable "gcs_storage_class" {
   description = "Bucket Storage Class"
   default     = "STANDARD"
+}
+
+variable "gcs_cluster_name" {
+  description = "Cluster Name"
+  default     = "trade-flows-cluster"
 }
