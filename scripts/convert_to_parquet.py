@@ -4,7 +4,7 @@ import argparse
 from pyspark.sql import SparkSession
 from pyspark.sql.types import StructType, StructField, IntegerType, StringType, DoubleType
 
-
+# Parse command-line arguments
 parser = argparse.ArgumentParser()
 parser.add_argument('--HS_code', required=True)
 parser.add_argument('--bucket_name', required=True)

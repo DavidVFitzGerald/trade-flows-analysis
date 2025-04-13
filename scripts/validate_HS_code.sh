@@ -34,9 +34,9 @@ handle_HS_code() {
         HS_code="$DEFAULT_HS_CODE"
     else
         HS_code="$1"
-        validate_HS_code "$HS_code"
+        validate_HS_code "${HS_code}"
     fi
 
-    echo "$HS_code"
+    echo "${HS_code}"
 
 }

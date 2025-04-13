@@ -110,3 +110,10 @@ Uploade the python scripts to the bucket (adapt the name of the bucket if needed
 ```
 gsutil cp "convert_to_parquet.py" "gs://trade-flows-bucket/code/"
 ```
+
+
+Notes and possible improvements:
+There are many more ways in which the data could be analysed and presented. The analysis done in Looker Studio was kept to a minimum due to time constraints.
+While the BACI database contains data for different version of the HS classification system, and the pipeline was setup in such a way that the version can be provided as argument, it is recommended to use the HS17 for analysing the latest trends in trade, as it is the version for which most countries reported data in recent years. Eventually, HS22 will be used more widely in the future. But as it does not have date for many previous years, HS17 was used as default version for this project. Older version of HS should be used when analysing old trade flows. For a more detailed description of the differences between the different HS versions, please consult the documentation provided by CEPII: https://www.cepii.fr/DATA_DOWNLOAD/baci/doc/DescriptionBACI.html.
+There is likely quite a lot of room for optimizing the infrastructure. The size of the data that is handled is quite small, meaning that the infrastructure used (inlcuding the spark cluster) is probably an overkill.
+

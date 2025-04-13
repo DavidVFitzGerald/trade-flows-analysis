@@ -6,10 +6,10 @@ HS_code=$(handle_HS_code "$1")
 validation_status=$?
 
 if [ "$validation_status" -ne 0 ]; then
-  echo "$HS_code"
+  echo "${HS_code}"
   exit 1
 else
-  HS_code=$(echo "$HS_code" | tail -n 1)
+  HS_code=$(echo "${HS_code}" | tail -n 1)
 fi
 
 CONFIG_FILE="config.json"

@@ -13,12 +13,14 @@ else
 fi
 
 BUCKET_NAME="trade-flows-bucket"
+BQ_DATASET_NAME="trade_flows_dataset"
 
 gcloud dataproc jobs submit pyspark \
     --cluster=trade-flows-cluster \
     --properties='spark.driver.memory=4g,spark.executor.memory=4g' \
     --region=europe-west6 \
-    gs://"${BUCKET_NAME}"/code/convert_to_parquet.py \
+    gs://"${BUCKET_NAME}"/code/calculate_trade_per_country.py \
     -- \
       --HS_code="${HS_code}" \
-      --bucket_name="${BUCKET_NAME}"
+      --bucket_name="${BUCKET_NAME}" \
+      --bq_dataset_name="${BQ_DATASET_NAME}" \
