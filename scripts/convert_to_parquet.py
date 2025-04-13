@@ -3,6 +3,8 @@ import argparse
 
 from pyspark.sql import SparkSession
 from pyspark.sql.types import StructType, StructField, IntegerType, StringType, DoubleType
+from pyspark.sql.functions import col
+
 
 # Parse command-line arguments
 parser = argparse.ArgumentParser()
@@ -41,8 +43,8 @@ column_mapping = {
 for old_col, new_col in column_mapping.items():
     df = df.withColumnRenamed(old_col, new_col)
 
-# Convert the value from thousand USD to USD. This will make the analysis easier to interpret.
-df['value'] = df['value'] * 1000
+# Convert the value from thousand USD to USD. This will make the analysis easier to implement.
+df = df.withColumn("value", col("value") * 1000)
 
 # Save the DataFrame as a Parquet file
 parquet_folder = "parquet"

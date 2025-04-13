@@ -1,12 +1,21 @@
 # Trade Flows Analysis Pipeline
 ## Introduction
-This repository contains a data pipeline for ingesting and analysing trade data contained in the BACI database. It has been created for the purpose of being submitted as project for the [Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp)
+This repository contains a data pipeline for ingesting and analysing trade data contained in the BACI database, which is maintained by [CEPII](https://www.cepii.fr/CEPII/en/bdd_modele/bdd_modele_item.asp?id=37). This repository has been created for the purpose of being submitted as project for the [Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp)
 
+## Project goal
+The goal of this project is to analyze trade flows between countries, specifically the trade of goods. The BACI database contains data on bilateral trade flows for 200 countries at the product level, classified according to the "Harmonized System" (HS) nomenclature.
+This project focuses on analysing two aspects of trade:
+1. The total value of goods exported and imported by a country in a given year, as well as the corresponding trade deficit (calculated as the value of exports minus value of imports)
+2. The total value of goods exported and imported per country for a given HS code, in order to identify the most important exporters and importers of a given category of goods.
+Note that services are not included in the trade data, therefore their value is not considered at any point in this project. Therefore the trade deficit reflects only the trade deficit of goods.
+
+## Infrastructure and Pipeline
+The project was developed fully in the cloud, by using a Google Cloud Virtual Machine (VM). 
 
 ## Requirements
 - An account on Google Cloud Platform (GCP) with credits
 
-## Setup walkthrough
+## Setup
 In case you would like to run the data pipeline, follow the steps described below.
 1. On GCP, create a new project
 2. Create a service account and assign the "Storage Admin", "BigQuery Admin", "Compute Admin", and "Dataproc Administrator" roles to it
