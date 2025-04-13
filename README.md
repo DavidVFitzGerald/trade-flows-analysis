@@ -106,21 +106,7 @@ terraform apply
 8. Pyspark
 Enable Dataproc API
 
-Install Java
-Create java folder in the root directly, then download the JDK version 17.
+Uploade the python scripts to the bucket (adapt the name of the bucket if needed)
 ```
-wget https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_linux-x64_bin.tar.gz
+gsutil cp "convert_to_parquet.py" "gs://trade-flows-bucket/code/"
 ```
-
-Unpack it:
-```
-tar xzfv openjdk-17.0.2_linux-x64_bin.tar.gz
-```
-
-define JAVA_HOME and add it to PATH:
-```
-export JAVA_HOME="${HOME}/java/jdk-17.0.2"
-export PATH="${JAVA_HOME}/bin:${PATH}"
-```
-
-Add those two statements to the .bashrc file to avoid having to execute them again in a new shell.
