@@ -2,6 +2,34 @@
 
 source ./validate_HS_code.sh
 
+print_help() {
+    cat << EOF
+Usage: $(basename "$0") [HS_CODE]
+
+Description:
+  This script unzips the zip file for the specified Harmonized System (HS) code
+  and uploads the extracted CSV files to a Google Cloud Storage (GCS) bucket.
+
+Positional Arguments:
+  HS_CODE     Optional. One of the following: HS92, HS96, HS02, HS07, HS12, HS17, HS22
+              Specifies the version of the Harmonized System (HS) classification to use.
+              If not provided, defaults to: $DEFAULT_HS_CODE
+
+Options:
+  -h, --help  Show this help message and exit
+
+Example:
+  $(basename "$0") HS22
+  $(basename "$0")             # Uses default: $DEFAULT_HS_CODE
+EOF
+}
+
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    print_help
+    exit 0
+fi
+
+
 HS_code=$(handle_HS_code "$1")
 validation_status=$?
 

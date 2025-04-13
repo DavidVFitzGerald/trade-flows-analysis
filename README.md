@@ -100,16 +100,13 @@ terraform init
 ```
 terraform plan
 ```
+```
 terraform apply
 ```
 
 8. Pyspark
 Enable Dataproc API
 
-Uploade the python scripts to the bucket (adapt the name of the bucket if needed)
-```
-gsutil cp "convert_to_parquet.py" "gs://trade-flows-bucket/code/"
-```
 
 
 Notes and possible improvements:

@@ -41,6 +41,9 @@ column_mapping = {
 for old_col, new_col in column_mapping.items():
     df = df.withColumnRenamed(old_col, new_col)
 
+# Convert the value from thousand USD to USD. This will make the analysis easier to interpret.
+df['value'] = df['value'] * 1000
+
 # Save the DataFrame as a Parquet file
 parquet_folder = "parquet"
 output_path = f"gs://{bucket_name}/{parquet_folder}/{HS_code}"

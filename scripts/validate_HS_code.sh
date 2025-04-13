@@ -30,8 +30,8 @@ validate_HS_code() {
 handle_HS_code() {
     local script_name=$(basename "$0")
     if [[ -z "$1" ]]; then
-        echo -e "No HS code provided. Usage: $script_name <HSXX>\nUsing HS17 as default.\nValid codes are: ${VALID_HS_CODES[*]}"    
-        HS_code="$DEFAULT_HS_CODE"
+        echo -e "No HS code provided. Usage: $script_name <HSXX>\nUsing ${DEFAULT_HS_CODE} as default.\nValid codes are: ${VALID_HS_CODES[*]}"    
+        HS_code="${DEFAULT_HS_CODE}"
     else
         HS_code="$1"
         validate_HS_code "${HS_code}"

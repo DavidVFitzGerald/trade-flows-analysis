@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ./validate_HS_code.sh
+
 print_help() {
     cat << EOF
 Usage: $(basename "$0") [HS_CODE]
@@ -13,13 +15,14 @@ Description:
 
 Positional Arguments:
   HS_CODE     Optional. One of the following: HS92, HS96, HS02, HS07, HS12, HS17, HS22
+              Specifies the version of the Harmonized System (HS) classification to use.
               If not provided, defaults to: $DEFAULT_HS_CODE
 
 Options:
   -h, --help  Show this help message and exit
 
 Example:
-  $(basename "$0") HS12
+  $(basename "$0") HS22
   $(basename "$0")             # Uses default: $DEFAULT_HS_CODE
 EOF
 }
@@ -32,8 +35,6 @@ fi
 
 CONFIG_FILE="config.json"
 raw_dir=$(jq -r '.raw_dir' "$CONFIG_FILE")
-
-source ./validate_HS_code.sh
 
 website_url="https://www.cepii.fr/DATA_DOWNLOAD/baci/data/BACI_"
 
