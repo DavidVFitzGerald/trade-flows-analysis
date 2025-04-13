@@ -5,10 +5,11 @@ print_help() {
 Usage: $(basename "$0") [HS_CODE]
 
 Description:
-  This script downloads the data from the CEPII BACI database and unzips it. The data is available 
-  for different versions  of the Harmonized System (HS), which is a classification system for goods. 
-  The script checks the availability of the data for the current year and the previous year. If the 
-  data for the current year is not available, it will download the data for the previous year.
+  This script downloads the data from the CEPII BACI database. The data is available 
+  for different versions of the Harmonized System (HS), which is a classification 
+  system for goods. The script checks the availability of the data for the current 
+  year and the previous year. If the data for the current year is not available, it 
+  will download the data for the previous year.
 
 Positional Arguments:
   HS_CODE     Optional. One of the following: HS92, HS96, HS02, HS07, HS12, HS17, HS22
@@ -28,6 +29,9 @@ if [[ "$1" == "-h" || "$1" == "--help" ]]; then
     exit 0
 fi
 
+
+CONFIG_FILE="config.json"
+raw_dir=$(jq -r '.raw_dir' "$CONFIG_FILE")
 
 source ./validate_HS_code.sh
 
@@ -88,16 +92,14 @@ for year in "${years[@]}"; do
     url_year="${url_prefix}${year}"
     for url_suffix in "${url_suffixes[@]}"; do
         url="${url_year}${url_suffix}.zip"
-        if check_url "$url"; then
+        if check_url "${url}"; then
             echo "Downloading $url"
-            filename=$(basename "$url")
-            raw_dir="../data/raw/${HS_code}"
-            mkdir -p ${raw_dir}
+            raw_dir="${raw_dir}/${HS_code}"
+            rm -rf "${raw_dir}"; mkdir "${raw_dir}"
+            filename=$(basename "${url}")
             zip_path="${raw_dir}/${filename}"
-            wget ${url} -O ${zip_path}
-            staging_dir="../data/staging/${HS_code}"
-            mkdir -p ${staging_dir}
-            unzip -o ${zip_path} -d ${staging_dir}
+            wget "${url}" -O "${zip_path}"
+            echo "Downloaded ${url} to ${zip_path}"
             exit 0
         fi
     done

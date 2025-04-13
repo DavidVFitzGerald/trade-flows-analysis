@@ -212,5 +212,6 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-# Ignore data folder
-data/*
+# Ignore data subfolders
+data/raw/*
+data/staging/*
