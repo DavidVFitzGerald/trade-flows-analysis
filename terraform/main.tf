@@ -54,10 +54,12 @@ resource "google_dataproc_cluster" "trade-flows-cluster" {
     }
 
     software_config {
-      properties = {
+      image_version = "2.0-debian10"
+      override_properties = {
         "dataproc:dataproc.allow.zero.workers" = "true"
       }
     }
+
     worker_config {
       num_instances = 0
     }

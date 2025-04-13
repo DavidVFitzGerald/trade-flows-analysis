@@ -1,4 +1,4 @@
 {
   "raw_dir": "../data/raw/",
-  "staging_dir": "../data/staging/"
+  "csv_dir": "../data/csv/"
 }

@@ -15,7 +15,7 @@ fi
 CONFIG_FILE="config.json"
 
 raw_dir=$(jq -r '.raw_dir' "$CONFIG_FILE")
-staging_dir=$(jq -r '.staging_dir' "$CONFIG_FILE")
+csv_dir=$(jq -r '.csv_dir' "$CONFIG_FILE")
 
 raw_dir="${raw_dir}/${HS_code}"
 zip_file=$(find "${raw_dir}" -maxdepth 1 -type f -name "*.zip")
@@ -30,10 +30,10 @@ elif [ $(echo "$zip_file" | wc -l) -ne 1 ]; then
 fi
 
 # Unzip the file into the staging directory
-echo "Unzipping ${zip_file} into ${staging_dir}"
-staging_dir="${staging_dir}/${HS_code}"
-rm -rf "${staging_dir}"; mkdir "${staging_dir}"
-unzip -o "${zip_file}" -d "${staging_dir}"
+echo "Unzipping ${zip_file} into ${csv_dir}"
+csv_dir="${csv_dir}/${HS_code}"
+rm -rf "${csv_dir}"; mkdir "${csv_dir}"
+unzip -o "${zip_file}" -d "${csv_dir}"
 
 if [ $? -eq 0 ]; then
   echo "Unzipping completed successfully."
@@ -41,3 +41,7 @@ else
   echo "An error occurred while unzipping. Exiting."
   exit 1
 fi
+
+# Upload the CSV files to the GCS bucket.
+BUCKET_NAME="trade-flows-bucket"
+gsutil -m cp "${csv_dir}/*.csv" "gs://${BUCKET_NAME}/csv/${HS_code}/"
