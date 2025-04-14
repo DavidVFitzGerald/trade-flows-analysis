@@ -11,7 +11,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--HS_code', required=True)
 parser.add_argument('--bucket_name', required=True)
 
-args = parser.parse_args()
+args, _ = parser.parse_known_args()
 HS_code = args.HS_code
 bucket_name = args.bucket_name
 

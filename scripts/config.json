@@ -1,4 +1,7 @@
 {
   "raw_dir": "../data/raw/",
-  "csv_dir": "../data/csv/"
+  "csv_dir": "../data/csv/",
+  "bucket_name": "trade-flows-bucket",
+  "bq_dataset_name": "trade_flows_dataset",
+  "cluster_name": "trade-flows-cluster"
 }

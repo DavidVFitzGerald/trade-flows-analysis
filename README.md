@@ -112,6 +112,7 @@ Add the bin folder to the PATH variable so that terraform is visible from any di
 export PATH="${HOME}/bin:${PATH}"
 ```
 In the terraform/variables.tf file, edit the variables "credentials", "project", "region" and "location" to adapt them to your Google Cloud project.
+You will have to change bucket name as well (variable "gcs_bucket_name"). Change it in the config file scripts/config.json as well.
 
 To make it possible to launch a cluster with terraform, the service account used for authenticating to google cloud will need to be granted permission to act upon the service account of compute engine. 
 1. Go to the service accounts page in google cloud platform

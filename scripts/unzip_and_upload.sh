@@ -71,5 +71,6 @@ else
 fi
 
 # Upload the CSV files to the GCS bucket.
-BUCKET_NAME="trade-flows-bucket"
-gsutil -m cp "${csv_dir}/*.csv" "gs://${BUCKET_NAME}/csv/${HS_code}/"
+CONFIG_FILE="config.json"
+bucket_name=$(jq -r '.bucket_name' "$CONFIG_FILE")
+gsutil -m cp "${csv_dir}/*.csv" "gs://${bucket_name}/csv/${HS_code}/"

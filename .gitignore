@@ -212,5 +212,8 @@ override.tf.json
 .terraformrc
 terraform.rc
 
+# Ignore tfplan
+tfplan
+
 # Ignore data subfolders
 data/*
