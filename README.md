@@ -1,4 +1,4 @@
-![container ship](images/container ship.jpg)
+![container_ship](images/container_ship.jpg)
 # Trade Flows Analysis Pipeline
 ## Introduction
 This repository contains a data pipeline for ingesting and analysing trade data contained in the BACI database, which is maintained by [CEPII](https://www.cepii.fr/CEPII/en/bdd_modele/bdd_modele_item.asp?id=37). This repository has been created for the purpose of being submitted as project for the [Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp).
@@ -25,7 +25,7 @@ As the BACI database is updated once a year, this project uses a batch workflow.
   5. Using PySpark on a Dataproc cluster, the parquet files are read and the total trade values by country  are calculated, and subsequently, the balance of trade is calculated. The country codes and product codes are replaced by human-readable values before the dataframe is stored in a table in a BigQuery dataset.
   6. Using PySpark on a Dataproc cluster, the parquet files are read and the total trade values by country and by HS code are calculated. The country codes and product codes are replaced by human-readable values before the dataframe is stored in a table in a BigQuery dataset.
   7. The dataset was analysed in Looker Studio. The resulting dashboard can be viewed [here](https://lookerstudio.google.com/s/kkizcMmVhBE), and a screenshot is shown below.
-![Trade Flows Overview](images/Trade Flows Overview.png)
+![Trade_Flows_Overview](images/Trade_Flows_Overview.png)
 
 
 ### How to run the pipeline
