@@ -21,7 +21,7 @@ Note: due to time constraints, and the fact that the pipeline needs to be run on
 ## Pipeline
 As the BACI database is updated once a year, this project uses a batch workflow. The pipeline consists of the following steps:
   1. The infrastructure is setup using Terraform (init, plan, apply).
-  2. The data is downloaded from the BACI webpage for the specified HS code. This step handles the case where the URL of the data file might be different due to a new version having been uploaded. The downloaded data consists of a zip file.
+  2. The latest data available is downloaded from the BACI webpage for the specified HS code. This step handles automatically situations where the URL of the data file might be different due to a new version having been uploaded. The downloaded data consists of a zip file.
   3. The downloaded zip file is unzipped, and the extracted csv files are uploaded to a Google Cloud Storage bucket.
   4. The data contained in the csv files is converted to the parquet format using PySpark on a Dataproc cluster. During this step, the schema is defined and the year is used as partition when creating the parquet files. The year was chosen as partitioning variable since the data is analyzed year-by-year. The parquet files are stored in the bucket in a separate subfolder.
   5. Using PySpark on a Dataproc cluster, the parquet files are read and the total trade values by country  are calculated, and subsequently, the balance of trade is calculated. The country codes and product codes are replaced by human-readable values before the dataframe is stored in a table in a BigQuery dataset.
@@ -44,7 +44,7 @@ While the pipeline can be run on other HS versions that are available in the BAC
 
 Once the pipeline has finished, the BigQuery dataset will contain two tables containing the total trade values and the trade values per HS code.
 
-Run terraform destroy when you longer need to run any part of the pipeline and want to remove the data. If you want to keep the data for longer, but without running any part of the pipeline, stop the virtual machines and the Dataproc cluster via the Google Cloud Console.
+Run terraform destroy when you no longer need to run any part of the pipeline and want to remove the data. If you want to keep the data for longer, but without running any part of the pipeline, stop the virtual machines and the Dataproc cluster via the Google Cloud Console.
 
 ## Requirements
 To run the pipeline of this project, you need an account on Google Cloud Platform (GCP) with credits (the cost is less than 5 USD per run).
@@ -112,7 +112,7 @@ Add the bin folder to the PATH variable so that terraform is visible from any di
 export PATH="${HOME}/bin:${PATH}"
 ```
 In the terraform/variables.tf file, edit the variables "credentials", "project", "region" and "location" to adapt them to your Google Cloud project.
-You will have to change bucket name as well (variable "gcs_bucket_name"). Change it in the config file scripts/config.json as well.
+You will have to change bucket name as well (variable "gcs_bucket_name"). Change it in the config file `scripts/config.json` as well.
 
 To make it possible to launch a cluster with terraform, the service account used for authenticating to google cloud will need to be granted permission to act upon the service account of compute engine. 
 1. Go to the service accounts page in google cloud platform
