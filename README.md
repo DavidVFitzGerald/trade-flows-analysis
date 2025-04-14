@@ -16,7 +16,7 @@ Note that services are not included in the trade data, therefore their value is 
 - Terraform is used to setup these three resources
 - Looker Studio was used for analysing the dataset stored in BigQuery
 
-Note: due to time constraints, and the fact that the pipeline needs to be run only once a year, no orchestrator such as Airflow or Kestra was used for this project.
+Note: due to time constraints, and the fact that the pipeline needs to be run only once a year, no orchestrator such as Airflow or Kestra was used for this project. The whole pipeline can be run by calling one script, as described in the next section.
 
 ## Pipeline
 As the BACI database is updated once a year, this project uses a batch workflow. The pipeline consists of the following steps:
