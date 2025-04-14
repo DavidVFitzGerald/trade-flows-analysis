@@ -16,6 +16,8 @@ Note that services are not included in the trade data, therefore their value is 
 - Terraform is used to setup these three resources
 - Looker Studio was used for analysing the dataset stored in BigQuery
 
+Note: due to time constraints, and the fact that the pipeline needs to be run only once a year, no orchestrator such as Airflow or Kestra was used for this project.
+
 ## Pipeline
 As the BACI database is updated once a year, this project uses a batch workflow. The pipeline consists of the following steps:
   1. The infrastructure is setup using Terraform (init, plan, apply).
@@ -25,6 +27,7 @@ As the BACI database is updated once a year, this project uses a batch workflow.
   5. Using PySpark on a Dataproc cluster, the parquet files are read and the total trade values by country  are calculated, and subsequently, the balance of trade is calculated. The country codes and product codes are replaced by human-readable values before the dataframe is stored in a table in a BigQuery dataset.
   6. Using PySpark on a Dataproc cluster, the parquet files are read and the total trade values by country and by HS code are calculated. The country codes and product codes are replaced by human-readable values before the dataframe is stored in a table in a BigQuery dataset.
   7. The dataset was analysed in Looker Studio. The resulting dashboard can be viewed [here](https://lookerstudio.google.com/s/kkizcMmVhBE), and a screenshot is shown below.
+
 ![Trade_Flows_Overview](images/Trade_Flows_Overview.png)
 
 
@@ -35,10 +38,13 @@ Once the Google project and different needed tools are setup, in a bash shell, `
 ```
 bash pipeline.sh HS17
 ```
-The argument provided is the name of the version of the HS classification system for which to download and analyze the data. While the pipeline can be run on other HS versions that are available in the BACI database, it is recommended to use HS17 as it contains data for several of the most recent years. Refer to the Notes at end of this page for more information about the differences between the HS versions.
+The argument provided is the name of the version of the HS classification system for which to download and analyze the data. 
 
+While the pipeline can be run on other HS versions that are available in the BACI database, it is recommended to use HS17 as it contains data for several of the most recent years. Refer to the Notes at end of this page for more information about the differences between the HS versions.
 
-Note: due to time constraints, and the fact that the pipeline needs to be run only once a year, no orchestrator such as Airflow or Kestra was used for this project.
+Once the pipeline has finished, the BigQuery dataset will contain two tables containing the total trade values and the trade values per HS code.
+
+Run terraform destroy when you longer need to run any part of the pipeline and want to remove the data. If you want to keep the data for longer, but without running any part of the pipeline, stop the virtual machines and the Dataproc cluster via the Google Cloud Console.
 
 ## Requirements
 To run the pipeline of this project, you need an account on Google Cloud Platform (GCP) with credits (the cost is less than 5 USD per run).
