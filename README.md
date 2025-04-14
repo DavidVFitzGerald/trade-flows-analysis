@@ -23,9 +23,26 @@ As the BACI database is updated once a year, this project uses a batch workflow.
   1. The infrastructure is setup using Terraform (init, plan, apply).
   2. The latest data available is downloaded from the BACI webpage for the specified HS code. This step handles automatically situations where the URL of the data file might be different due to a new version having been uploaded. The downloaded data consists of a zip file.
   3. The downloaded zip file is unzipped, and the extracted csv files are uploaded to a Google Cloud Storage bucket.
-  4. The data contained in the csv files is converted to the parquet format using PySpark on a Dataproc cluster. During this step, the schema is defined and the year is used as partition when creating the parquet files. The year was chosen as partitioning variable since the data is analyzed year-by-year. The parquet files are stored in the bucket in a separate subfolder.
-  5. Using PySpark on a Dataproc cluster, the parquet files are read and the total trade values by country  are calculated, and subsequently, the balance of trade is calculated. The country codes and product codes are replaced by human-readable values before the dataframe is stored in a table in a BigQuery dataset.
-  6. Using PySpark on a Dataproc cluster, the parquet files are read and the total trade values by country and by HS code are calculated. The country codes and product codes are replaced by human-readable values before the dataframe is stored in a table in a BigQuery dataset.
+  4. The data contained in the csv files is converted to the parquet format using PySpark on a Dataproc cluster. During this step, the schema is defined and the year is used as partition when creating the parquet files. The year was chosen as partitioning variable since the data is analyzed year-by-year. The following fields are contained in the data in the parquet files:
+   - year
+   - exporter
+   - importer
+   - product
+   - value
+   - quantity
+  The parquet files are stored in the bucket in a separate subfolder.
+  5. Using PySpark on a Dataproc cluster, the parquet files are read and the total trade values by country are calculated, and subsequently, the balance of trade is calculated. The country codes and product codes are replaced by human-readable values before the dataframe is stored in a table in a BigQuery dataset. The table is named trade_summary_per_country and contains the following fields:
+   - year
+   - total_exported_value
+   - total_imported_value
+   - trade_deficit
+   - country
+  6. Using PySpark on a Dataproc cluster, the parquet files are read and the total trade values by country and by HS code are calculated. The country codes and product codes are replaced by human-readable values before the dataframe is stored in a table in a BigQuery dataset. The table is named trade_by_hs_code and contains the following fields:
+   - year
+   - total_exported_value
+   - total_imported_value
+   - country
+   - HS_code
   7. The dataset was analysed in Looker Studio. The resulting dashboard can be viewed [here](https://lookerstudio.google.com/s/kkizcMmVhBE), and a screenshot is shown below.
 
 ![Trade_Flows_Overview](images/Trade_Flows_Overview.png)
